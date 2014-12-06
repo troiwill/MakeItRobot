@@ -17,8 +17,6 @@ const int MakeItMotorShield::kMotorPwm4 = 0x83;
 
 int MakeItMotorShield::instanceCount = 0;
 
-//MakeItMotorShield* MakeItMotorShield::shieldRef = NULL;
-
 MotorShieldCommand::MotorShieldCommand()
   : speeds()
 { }
@@ -43,7 +41,7 @@ MakeItMotorShield::MakeItMotorShield()
 }
 
 MakeItMotorShield::~MakeItMotorShield() {
-    if (--instanceCount == 0) {
+    if (--instanceCount == 0) { // <--- I do not know if this is necessary
         // stops all motors
         stopAllMotors();
     }
@@ -135,13 +133,14 @@ void MakeItMotorShield::runCommand(const MotorShieldCommand& kCmd) {
         motorPwn[i] = rpm;
     }
 
-    // set the motor speeds
+    // set the motor directions and speeds
     for (unsigned int i = 0; i < numActivePorts; i++) {
         dcWrite(motorPwmCmd[i], motorPwn[i]);
     }
 }
 
 void MakeItMotorShield::stopAllMotors() {
+    // create a command to stop all the motors
     MotorShieldCommand cmd;
     for (unsigned int i = 0; i < numActivePorts; i++) {
         cmd.addCommand(activePorts[i], 0);

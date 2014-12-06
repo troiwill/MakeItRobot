@@ -21,8 +21,8 @@ public:
     /**
      * Moves the robot forward or backward by specifying
      * the number of millimeters.
-     * If millimeters is negative (-), the robot moves backward.
-     * If millimeters is positive (+), the robot moves forward.
+     * # If millimeters is negative (-), the robot moves backward.
+     * # If millimeters is positive (+), the robot moves forward.
     **/
     void move(float distMM = 0.0f);
 
@@ -49,7 +49,11 @@ public:
     **/
     MovingState_t getState() const;
 
-    //
+    /**
+     * Determines when the motors stop based on the
+     * distance or angle calculations performed within
+     * the move or turn methods.
+    **/
     void checkTime();
 
     /**

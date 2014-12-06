@@ -2,7 +2,6 @@
 #define MAKE_IT_MOTOR_SHIELD_H
 
 #include "Arduino.h"
-//#include <map>
 
 #define DC_CMD_IR_TX1    0x70
 #define DC_CMD_IR_TX2    0x71
@@ -13,6 +12,10 @@
 #define DC_SEND_HEADER   0x56
 #define DC_RECV_HEADER   0x76
 
+/**
+ * The MotorShieldCommand class stores a revolution per
+ * minute request for each motor shield port.
+**/
 class MotorShieldCommand {
 public:
     // constructor
@@ -26,9 +29,17 @@ public:
 
     friend class MakeItMotorShield;
 private:
+    /**
+     * Stores a list of rpms. An rpm "r" for a particular
+     * shield port "sp" is stored as "speeds[sp - 1] = r"
+    **/
     int speeds[4];
 };
 
+/**
+ * The MakeItMotorShield class provides an interface for
+ * operating the motor shield using an Arduino Uno v3
+**/
 class MakeItMotorShield {
 public:
     // constructor
@@ -55,24 +66,41 @@ public:
     static const unsigned int kMaxNumMotors;
 
 private:
+    // stores the list of active shield ports
     unsigned int activePorts[4];
+
+    // the number of active shield ports
     unsigned int numActivePorts;
 
-    // 
+    /**
+     * Hexidecimal header values that are used in
+     * conjunction with a hexidecimal direction value
+     * for specifying the direction of a motor on a
+     * particular shield port.
+    **/
     static const int kMotorDir1;
     static const int kMotorDir2;
     static const int kMotorDir3;
     static const int kMotorDir4;
 
-    // 
+    /**
+     * Hexidecimal values for specifying the
+     * motor direction.
+    **/
     static const int kCW;
     static const int kCCW;
 
+    /**
+     * Hexidecimal header values that are used 
+     * in conjunction with a rpm value to specify
+     * motor speed.
+    **/
     static const int kMotorPwm1;
     static const int kMotorPwm2;
     static const int kMotorPwm3;
     static const int kMotorPwm4;
 
+    // a count of the number instances of this class
     static int instanceCount;
 };
 
